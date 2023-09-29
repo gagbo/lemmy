@@ -21,6 +21,7 @@ use lemmy_utils::{
 
 // TODO: we dont do anything for federation here, it should be updated the next time the community
 //       gets fetched. i hope we can get rid of the community creator role soon.
+#[cfg_attr(feature = "prometheus-metrics", autometrics::autometrics(objective = super::API_SLO))]
 #[tracing::instrument(skip(context))]
 pub async fn transfer_community(
   data: Json<TransferCommunity>,

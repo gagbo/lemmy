@@ -39,6 +39,7 @@ use lemmy_db_schema::{
 use lemmy_utils::error::LemmyError;
 use url::Url;
 
+#[cfg_attr(feature = "prometheus-metrics", autometrics::autometrics(objective = super::APUB_SLO))]
 impl CollectionAdd {
   #[tracing::instrument(skip_all)]
   pub async fn send_add_mod(
@@ -101,6 +102,7 @@ impl CollectionAdd {
 }
 
 #[async_trait::async_trait]
+#[cfg_attr(feature = "prometheus-metrics", autometrics::autometrics(objective = super::APUB_SLO))]
 impl ActivityHandler for CollectionAdd {
   type DataType = LemmyContext;
   type Error = LemmyError;

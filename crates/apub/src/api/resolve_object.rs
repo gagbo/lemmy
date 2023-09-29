@@ -16,6 +16,7 @@ use lemmy_db_views::structs::{CommentView, LocalUserView, PostView};
 use lemmy_db_views_actor::structs::{CommunityView, PersonView};
 use lemmy_utils::error::{LemmyError, LemmyErrorExt2, LemmyErrorType};
 
+#[cfg_attr(feature = "prometheus-metrics", autometrics::autometrics(objective = super::APUB_SLO))]
 #[tracing::instrument(skip(context))]
 pub async fn resolve_object(
   data: Query<ResolveObject>,
@@ -43,6 +44,7 @@ pub async fn resolve_object(
     .with_lemmy_type(LemmyErrorType::CouldntFindObject)
 }
 
+#[cfg_attr(feature = "prometheus-metrics", autometrics::autometrics(objective = super::APUB_SLO))]
 async fn convert_response(
   object: SearchableObjects,
   user_id: Option<PersonId>,

@@ -24,6 +24,7 @@ use lemmy_db_schema::{
 use lemmy_utils::error::LemmyError;
 use url::Url;
 
+#[cfg_attr(feature = "prometheus-metrics", autometrics::autometrics(objective = super::APUB_SLO))]
 pub(crate) async fn send_update_community(
   community: Community,
   actor: Person,
@@ -58,6 +59,7 @@ pub(crate) async fn send_update_community(
 }
 
 #[async_trait::async_trait]
+#[cfg_attr(feature = "prometheus-metrics", autometrics::autometrics(objective = super::APUB_SLO))]
 impl ActivityHandler for UpdateCommunity {
   type DataType = LemmyContext;
   type Error = LemmyError;

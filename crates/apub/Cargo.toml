@@ -13,6 +13,9 @@ name = "lemmy_apub"
 path = "src/lib.rs"
 doctest = false
 
+[features]
+prometheus-metrics = [ "autometrics" ]
+
 [dependencies]
 lemmy_utils = { workspace = true }
 lemmy_db_schema = { workspace = true, features = ["full"] }
@@ -41,6 +44,7 @@ html2md = "0.2.14"
 serde_with = { workspace = true }
 enum_delegate = "0.2.0"
 moka = { version = "0.11", features = ["future"] }
+autometrics = { workspace = true, optional = true }
 
 [dev-dependencies]
 serial_test = { workspace = true }

@@ -8,6 +8,7 @@ use lemmy_db_schema::{source::private_message_report::PrivateMessageReport, trai
 use lemmy_db_views::structs::{LocalUserView, PrivateMessageReportView};
 use lemmy_utils::error::{LemmyError, LemmyErrorExt, LemmyErrorType};
 
+#[cfg_attr(feature = "prometheus-metrics", autometrics::autometrics(objective = super::API_SLO))]
 #[tracing::instrument(skip(context))]
 pub async fn resolve_pm_report(
   data: Json<ResolvePrivateMessageReport>,

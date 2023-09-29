@@ -16,6 +16,7 @@ use lemmy_db_schema::{
 use lemmy_db_views::structs::SiteView;
 use lemmy_utils::error::{LemmyError, LemmyErrorExt, LemmyErrorType};
 
+#[cfg_attr(feature = "prometheus-metrics", autometrics::autometrics(objective = super::API_SLO))]
 pub async fn verify_email(
   data: Json<VerifyEmail>,
   context: Data<LemmyContext>,

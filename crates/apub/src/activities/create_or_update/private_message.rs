@@ -18,6 +18,7 @@ use lemmy_db_views::structs::PrivateMessageView;
 use lemmy_utils::error::LemmyError;
 use url::Url;
 
+#[cfg_attr(feature = "prometheus-metrics", autometrics::autometrics(objective = super::APUB_SLO))]
 pub(crate) async fn send_create_or_update_pm(
   pm_view: PrivateMessageView,
   kind: CreateOrUpdateType,
@@ -44,6 +45,7 @@ pub(crate) async fn send_create_or_update_pm(
 }
 
 #[async_trait::async_trait]
+#[cfg_attr(feature = "prometheus-metrics", autometrics::autometrics(objective = super::APUB_SLO))]
 impl ActivityHandler for CreateOrUpdateChatMessage {
   type DataType = LemmyContext;
   type Error = LemmyError;

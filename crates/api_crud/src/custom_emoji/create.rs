@@ -13,6 +13,7 @@ use lemmy_db_schema::source::{
 use lemmy_db_views::structs::{CustomEmojiView, LocalUserView};
 use lemmy_utils::error::LemmyError;
 
+#[cfg_attr(feature = "prometheus-metrics", autometrics::autometrics(objective = super::CRUD_SLO))]
 #[tracing::instrument(skip(context))]
 pub async fn create_custom_emoji(
   data: Json<CreateCustomEmoji>,

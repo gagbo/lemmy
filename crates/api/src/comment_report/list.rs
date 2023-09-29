@@ -8,6 +8,7 @@ use lemmy_utils::error::LemmyError;
 
 /// Lists comment reports for a community if an id is supplied
 /// or returns all comment reports for communities a user moderates
+#[cfg_attr(feature = "prometheus-metrics", autometrics::autometrics(objective = super::API_SLO))]
 #[tracing::instrument(skip(context))]
 pub async fn list_comment_reports(
   data: Query<ListCommentReports>,

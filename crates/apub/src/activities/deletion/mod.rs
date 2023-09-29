@@ -48,6 +48,15 @@ pub mod delete;
 pub mod delete_user;
 pub mod undo_delete;
 
+#[cfg(feature = "prometheus-metrics")]
+const APUB_SLO: autometrics::objectives::Objective =
+  autometrics::objectives::Objective::new("activities_deletion_apub")
+    .success_rate(autometrics::objectives::ObjectivePercentile::P99_9)
+    .latency(
+      autometrics::objectives::ObjectiveLatency::Ms250,
+      autometrics::objectives::ObjectivePercentile::P99,
+    );
+
 /// Parameter `reason` being set indicates that this is a removal by a mod. If its unset, this
 /// action was done by a normal user.
 #[tracing::instrument(skip_all)]

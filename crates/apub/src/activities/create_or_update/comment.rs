@@ -42,6 +42,7 @@ use lemmy_db_schema::{
 use lemmy_utils::{error::LemmyError, utils::mention::scrape_text_for_mentions};
 use url::Url;
 
+#[cfg_attr(feature = "prometheus-metrics", autometrics::autometrics(objective = super::APUB_SLO))]
 impl CreateOrUpdateNote {
   #[tracing::instrument(skip(comment, person_id, kind, context))]
   pub(crate) async fn send(
@@ -101,6 +102,7 @@ impl CreateOrUpdateNote {
 }
 
 #[async_trait::async_trait]
+#[cfg_attr(feature = "prometheus-metrics", autometrics::autometrics(objective = super::APUB_SLO))]
 impl ActivityHandler for CreateOrUpdateNote {
   type DataType = LemmyContext;
   type Error = LemmyError;

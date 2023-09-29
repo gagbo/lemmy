@@ -16,6 +16,15 @@ pub mod lock_page;
 pub mod report;
 pub mod update;
 
+#[cfg(feature = "prometheus-metrics")]
+const APUB_SLO: autometrics::objectives::Objective =
+  autometrics::objectives::Objective::new("activities_community_apub")
+    .success_rate(autometrics::objectives::ObjectivePercentile::P99_9)
+    .latency(
+      autometrics::objectives::ObjectiveLatency::Ms250,
+      autometrics::objectives::ObjectivePercentile::P99,
+    );
+
 /// This function sends all activities which are happening in a community to the right inboxes.
 /// For example Create/Page, Add/Mod etc, but not private messages.
 ///

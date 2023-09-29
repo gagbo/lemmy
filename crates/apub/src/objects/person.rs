@@ -63,6 +63,7 @@ impl From<DbPerson> for ApubPerson {
 }
 
 #[async_trait::async_trait]
+#[cfg_attr(feature = "prometheus-metrics", autometrics::autometrics(objective = super::APUB_SLO))]
 impl Object for ApubPerson {
   type DataType = LemmyContext;
   type Kind = Person;

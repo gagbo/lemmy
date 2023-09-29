@@ -38,6 +38,7 @@ use lemmy_utils::{
   },
 };
 
+#[cfg_attr(feature = "prometheus-metrics", autometrics::autometrics(objective = super::CRUD_SLO))]
 #[tracing::instrument(skip(context))]
 pub async fn register(
   data: Json<Register>,

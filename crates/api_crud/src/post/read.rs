@@ -16,6 +16,7 @@ use lemmy_db_views::{
 use lemmy_db_views_actor::structs::{CommunityModeratorView, CommunityView};
 use lemmy_utils::error::{LemmyError, LemmyErrorExt, LemmyErrorType};
 
+#[cfg_attr(feature = "prometheus-metrics", autometrics::autometrics(objective = super::CRUD_SLO))]
 #[tracing::instrument(skip(context))]
 pub async fn get_post(
   data: Query<GetPost>,

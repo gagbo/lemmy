@@ -25,6 +25,7 @@ use lemmy_utils::{
   utils::{time::naive_from_unix, validation::is_valid_body_field},
 };
 
+#[cfg_attr(feature = "prometheus-metrics", autometrics::autometrics(objective = super::API_SLO))]
 #[tracing::instrument(skip(context))]
 pub async fn ban_from_community(
   data: Json<BanFromCommunity>,

@@ -12,6 +12,7 @@ use lemmy_db_schema::{
 use lemmy_db_views::structs::{LocalUserView, PrivateMessageView};
 use lemmy_utils::error::{LemmyError, LemmyErrorExt, LemmyErrorType};
 
+#[cfg_attr(feature = "prometheus-metrics", autometrics::autometrics(objective = super::CRUD_SLO))]
 #[tracing::instrument(skip(context))]
 pub async fn delete_private_message(
   data: Json<DeletePrivateMessage>,

@@ -23,6 +23,7 @@ pub struct PersonQuery {
 }
 
 /// Return the ActivityPub json representation of a local person over HTTP.
+#[cfg_attr(feature = "prometheus-metrics", autometrics::autometrics(objective = super::APUB_SLO))]
 #[tracing::instrument(skip_all)]
 pub(crate) async fn get_apub_person_http(
   info: web::Path<PersonQuery>,
@@ -43,6 +44,7 @@ pub(crate) async fn get_apub_person_http(
   }
 }
 
+#[cfg_attr(feature = "prometheus-metrics", autometrics::autometrics(objective = super::APUB_SLO))]
 #[tracing::instrument(skip_all)]
 pub async fn person_inbox(
   request: HttpRequest,
@@ -55,6 +57,7 @@ pub async fn person_inbox(
   .await
 }
 
+#[cfg_attr(feature = "prometheus-metrics", autometrics::autometrics(objective = super::APUB_SLO))]
 #[tracing::instrument(skip_all)]
 pub(crate) async fn get_apub_person_outbox(
   info: web::Path<PersonQuery>,

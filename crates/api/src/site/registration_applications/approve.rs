@@ -15,6 +15,7 @@ use lemmy_db_schema::{
 use lemmy_db_views::structs::{LocalUserView, RegistrationApplicationView};
 use lemmy_utils::error::LemmyError;
 
+#[cfg_attr(feature = "prometheus-metrics", autometrics::autometrics(objective = super::API_SLO))]
 pub async fn approve_registration_application(
   data: Json<ApproveRegistrationApplication>,
   context: Data<LemmyContext>,

@@ -22,6 +22,7 @@ use url::Url;
 pub(crate) struct ApubCommunityModerators(pub(crate) Vec<CommunityModeratorView>);
 
 #[async_trait::async_trait]
+#[cfg_attr(feature = "prometheus-metrics", autometrics::autometrics(objective = super::APUB_SLO))]
 impl Collection for ApubCommunityModerators {
   type Owner = ApubCommunity;
   type DataType = LemmyContext;

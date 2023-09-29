@@ -42,6 +42,7 @@ use lemmy_db_schema::{
 use lemmy_utils::error::LemmyError;
 use url::Url;
 
+#[cfg_attr(feature = "prometheus-metrics", autometrics::autometrics(objective = super::APUB_SLO))]
 impl BlockUser {
   pub(in crate::activities::block) async fn new(
     target: &SiteOrCommunity,
@@ -111,6 +112,7 @@ impl BlockUser {
 }
 
 #[async_trait::async_trait]
+#[cfg_attr(feature = "prometheus-metrics", autometrics::autometrics(objective = super::APUB_SLO))]
 impl ActivityHandler for BlockUser {
   type DataType = LemmyContext;
   type Error = LemmyError;

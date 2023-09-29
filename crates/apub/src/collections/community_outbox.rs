@@ -30,6 +30,7 @@ use url::Url;
 pub(crate) struct ApubCommunityOutbox(Vec<ApubPost>);
 
 #[async_trait::async_trait]
+#[cfg_attr(feature = "prometheus-metrics", autometrics::autometrics(objective = super::APUB_SLO))]
 impl Collection for ApubCommunityOutbox {
   type Owner = ApubCommunity;
   type DataType = LemmyContext;

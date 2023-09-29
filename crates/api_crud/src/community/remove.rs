@@ -20,6 +20,7 @@ use lemmy_utils::{
   utils::time::naive_from_unix,
 };
 
+#[cfg_attr(feature = "prometheus-metrics", autometrics::autometrics(objective = super::CRUD_SLO))]
 #[tracing::instrument(skip(context))]
 pub async fn remove_community(
   data: Json<RemoveCommunity>,

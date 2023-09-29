@@ -15,6 +15,7 @@ use lemmy_db_schema::source::{activity::ActivitySendTargets, person::Person};
 use lemmy_utils::error::LemmyError;
 use url::Url;
 
+#[cfg_attr(feature = "prometheus-metrics", autometrics::autometrics(objective = super::APUB_SLO))]
 pub async fn delete_user(
   person: Person,
   delete_content: bool,
@@ -57,6 +58,7 @@ impl ActivityHandler for DeleteUser {
     self.actor.inner()
   }
 
+  #[cfg_attr(feature = "prometheus-metrics", autometrics::autometrics(objective = super::APUB_SLO))]
   async fn verify(&self, context: &Data<Self::DataType>) -> Result<(), LemmyError> {
     insert_received_activity(&self.id, context).await?;
     verify_is_public(&self.to, &[])?;
@@ -65,6 +67,7 @@ impl ActivityHandler for DeleteUser {
     Ok(())
   }
 
+  #[cfg_attr(feature = "prometheus-metrics", autometrics::autometrics(objective = super::APUB_SLO))]
   async fn receive(self, context: &Data<Self::DataType>) -> Result<(), LemmyError> {
     let actor = self.actor.dereference(context).await?;
     if self.remove_data.unwrap_or(false) {

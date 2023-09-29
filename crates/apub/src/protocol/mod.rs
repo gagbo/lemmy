@@ -16,6 +16,15 @@ pub mod activities;
 pub(crate) mod collections;
 pub(crate) mod objects;
 
+#[cfg(feature = "prometheus-metrics")]
+const APUB_SLO: autometrics::objectives::Objective =
+  autometrics::objectives::Objective::new("protocol_apub")
+    .success_rate(autometrics::objectives::ObjectivePercentile::P99_9)
+    .latency(
+      autometrics::objectives::ObjectiveLatency::Ms250,
+      autometrics::objectives::ObjectivePercentile::P99,
+    );
+
 #[derive(Clone, Debug, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct Source {

@@ -15,6 +15,7 @@ use lemmy_db_views::{comment_view::CommentQuery, post_view::PostQuery, structs::
 use lemmy_db_views_actor::{community_view::CommunityQuery, person_view::PersonQuery};
 use lemmy_utils::error::LemmyError;
 
+#[cfg_attr(feature = "prometheus-metrics", autometrics::autometrics(objective = super::APUB_SLO))]
 #[tracing::instrument(skip(context))]
 pub async fn search(
   data: Query<Search>,

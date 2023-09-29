@@ -585,6 +585,33 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "d468802bab17cbc0cc575e9b053f41e72aa36bfa6b7f55e3529ffa43161b97fa"
 
 [[package]]
+name = "autometrics"
+version = "0.6.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "95cef5eb1e18adfb843202bf71587174e480ed67c0ca3e976bf40e82d9adce86"
+dependencies = [
+ "autometrics-macros",
+ "cfg_aliases",
+ "linkme",
+ "once_cell",
+ "prometheus",
+ "spez",
+ "thiserror",
+]
+
+[[package]]
+name = "autometrics-macros"
+version = "0.6.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "543250f01aa62c3b2666e327b335be532845a35e440eb984f5e6bad69106833d"
+dependencies = [
+ "percent-encoding",
+ "proc-macro2",
+ "quote",
+ "syn 1.0.103",
+]
+
+[[package]]
 name = "awc"
 version = "3.0.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -934,6 +961,12 @@ name = "cfg-if"
 version = "1.0.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "baf1de4339761588bc0619e3cbc0120ee582ebb74b53b4efbf79117bd2da40fd"
+
+[[package]]
+name = "cfg_aliases"
+version = "0.1.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "fd16c4719339c4530435d38e511904438d07cce7950afa3718a84ac36c10e89e"
 
 [[package]]
 name = "chrono"
@@ -2627,6 +2660,7 @@ dependencies = [
  "actix-web",
  "anyhow",
  "async-trait",
+ "autometrics",
  "base64 0.21.2",
  "bcrypt",
  "captcha",
@@ -2688,6 +2722,7 @@ dependencies = [
  "activitypub_federation",
  "actix-web",
  "async-trait",
+ "autometrics",
  "bcrypt",
  "chrono",
  "lemmy_api_common",
@@ -2711,6 +2746,7 @@ dependencies = [
  "anyhow",
  "assert-json-diff",
  "async-trait",
+ "autometrics",
  "chrono",
  "diesel",
  "enum_delegate",
@@ -2884,6 +2920,7 @@ dependencies = [
  "actix-web",
  "actix-web-httpauth",
  "actix-web-prom",
+ "autometrics",
  "chrono",
  "clap",
  "clokwerk",
@@ -3026,6 +3063,26 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "96dd5884008358112bc66093362197c7248ece00d46624e2cf71e50029f8cff5"
 dependencies = [
  "memchr",
+]
+
+[[package]]
+name = "linkme"
+version = "0.3.15"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "9f948366ad5bb46b5514ba7a7a80643726eef08b06632592699676748c8bc33b"
+dependencies = [
+ "linkme-impl",
+]
+
+[[package]]
+name = "linkme-impl"
+version = "0.3.15"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "bc28438cad73dcc90ff3466fc329a9252b1b8ba668eb0d5668ba97088cf4eef0"
+dependencies = [
+ "proc-macro2",
+ "quote",
+ "syn 2.0.31",
 ]
 
 [[package]]
@@ -4885,6 +4942,17 @@ checksum = "2538b18701741680e0322a2302176d3253a35388e2e62f172f64f4f16605f877"
 dependencies = [
  "libc",
  "windows-sys 0.48.0",
+]
+
+[[package]]
+name = "spez"
+version = "0.1.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "c87e960f4dca2788eeb86bbdde8dd246be8948790b7618d656e68f9b720a86e8"
+dependencies = [
+ "proc-macro2",
+ "quote",
+ "syn 2.0.31",
 ]
 
 [[package]]

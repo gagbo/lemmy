@@ -9,6 +9,7 @@ use lemmy_db_schema::source::custom_emoji::CustomEmoji;
 use lemmy_db_views::structs::LocalUserView;
 use lemmy_utils::error::LemmyError;
 
+#[cfg_attr(feature = "prometheus-metrics", autometrics::autometrics(objective = super::CRUD_SLO))]
 #[tracing::instrument(skip(context))]
 pub async fn delete_custom_emoji(
   data: Json<DeleteCustomEmoji>,

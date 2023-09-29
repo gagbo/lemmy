@@ -19,6 +19,7 @@ use lemmy_utils::error::LemmyError;
 ///
 /// Disabling is only possible if 2FA was previously enabled. Again it is necessary to pass a valid
 /// token.
+#[cfg_attr(feature = "prometheus-metrics", autometrics::autometrics(objective = super::API_SLO))]
 #[tracing::instrument(skip(context))]
 pub async fn update_totp(
   data: Json<UpdateTotp>,

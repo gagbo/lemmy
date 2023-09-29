@@ -35,6 +35,7 @@ use lemmy_utils::error::LemmyError;
 use url::Url;
 
 #[async_trait::async_trait]
+#[cfg_attr(feature = "prometheus-metrics", autometrics::autometrics(objective = super::APUB_SLO))]
 impl ActivityHandler for LockPage {
   type DataType = LemmyContext;
   type Error = LemmyError;

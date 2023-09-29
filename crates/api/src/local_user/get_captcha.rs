@@ -11,6 +11,7 @@ use lemmy_db_schema::source::{
 };
 use lemmy_utils::error::LemmyError;
 
+#[cfg_attr(feature = "prometheus-metrics", autometrics::autometrics(objective = super::API_SLO))]
 #[tracing::instrument(skip(context))]
 pub async fn get_captcha(
   context: Data<LemmyContext>,

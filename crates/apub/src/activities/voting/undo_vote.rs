@@ -22,6 +22,7 @@ use lemmy_api_common::context::LemmyContext;
 use lemmy_utils::error::LemmyError;
 use url::Url;
 
+#[cfg_attr(feature = "prometheus-metrics", autometrics::autometrics(objective = super::APUB_SLO))]
 impl UndoVote {
   pub(in crate::activities::voting) fn new(
     vote: Vote,
@@ -43,6 +44,7 @@ impl UndoVote {
 }
 
 #[async_trait::async_trait]
+#[cfg_attr(feature = "prometheus-metrics", autometrics::autometrics(objective = super::APUB_SLO))]
 impl ActivityHandler for UndoVote {
   type DataType = LemmyContext;
   type Error = LemmyError;

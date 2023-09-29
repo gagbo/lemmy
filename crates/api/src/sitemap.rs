@@ -9,6 +9,16 @@ use lemmy_utils::error::LemmyResult;
 use sitemap_rs::{url::Url, url_set::UrlSet};
 use tracing::info;
 
+#[cfg(feature = "prometheus-metrics")]
+const API_SLO: autometrics::objectives::Objective =
+  autometrics::objectives::Objective::new("sitemap_api")
+    .success_rate(autometrics::objectives::ObjectivePercentile::P99_9)
+    .latency(
+      autometrics::objectives::ObjectiveLatency::Ms250,
+      autometrics::objectives::ObjectivePercentile::P99,
+    );
+
+#[cfg_attr(feature = "prometheus-metrics", autometrics::autometrics(objective = API_SLO))]
 async fn generate_urlset(
   posts: Vec<(DbUrl, chrono::DateTime<chrono::Utc>)>,
 ) -> LemmyResult<UrlSet> {
@@ -25,6 +35,7 @@ async fn generate_urlset(
   Ok(UrlSet::new(urls)?)
 }
 
+#[cfg_attr(feature = "prometheus-metrics", autometrics::autometrics(objective = API_SLO))]
 pub async fn get_sitemap(context: Data<LemmyContext>) -> LemmyResult<HttpResponse> {
   info!("Generating sitemap with posts from last {} hours...", 24);
   let posts = Post::list_for_sitemap(&mut context.pool()).await?;

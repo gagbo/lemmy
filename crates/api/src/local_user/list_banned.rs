@@ -4,6 +4,7 @@ use lemmy_db_views::structs::LocalUserView;
 use lemmy_db_views_actor::structs::PersonView;
 use lemmy_utils::error::LemmyError;
 
+#[cfg_attr(feature = "prometheus-metrics", autometrics::autometrics(objective = super::API_SLO))]
 pub async fn list_banned_users(
   context: Data<LemmyContext>,
   local_user_view: LocalUserView,

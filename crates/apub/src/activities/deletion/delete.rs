@@ -42,6 +42,7 @@ impl ActivityHandler for Delete {
   }
 
   #[tracing::instrument(skip_all)]
+  #[cfg_attr(feature = "prometheus-metrics", autometrics::autometrics(objective = super::APUB_SLO))]
   async fn verify(&self, context: &Data<Self::DataType>) -> Result<(), LemmyError> {
     insert_received_activity(&self.id, context).await?;
     verify_delete_activity(self, self.summary.is_some(), context).await?;
@@ -49,6 +50,7 @@ impl ActivityHandler for Delete {
   }
 
   #[tracing::instrument(skip_all)]
+  #[cfg_attr(feature = "prometheus-metrics", autometrics::autometrics(objective = super::APUB_SLO))]
   async fn receive(self, context: &Data<LemmyContext>) -> Result<(), LemmyError> {
     if let Some(reason) = self.summary {
       // We set reason to empty string if it doesn't exist, to distinguish between delete and
@@ -71,6 +73,7 @@ impl ActivityHandler for Delete {
   }
 }
 
+#[cfg_attr(feature = "prometheus-metrics", autometrics::autometrics(objective = super::APUB_SLO))]
 impl Delete {
   pub(in crate::activities::deletion) fn new(
     actor: &ApubPerson,
@@ -99,6 +102,7 @@ impl Delete {
 }
 
 #[tracing::instrument(skip_all)]
+#[cfg_attr(feature = "prometheus-metrics", autometrics::autometrics(objective = super::APUB_SLO))]
 pub(in crate::activities) async fn receive_remove_action(
   actor: &ApubPerson,
   object: &Url,

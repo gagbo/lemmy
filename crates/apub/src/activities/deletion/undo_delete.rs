@@ -41,6 +41,7 @@ impl ActivityHandler for UndoDelete {
     self.actor.inner()
   }
 
+  #[cfg_attr(feature = "prometheus-metrics", autometrics::autometrics(objective = super::APUB_SLO))]
   async fn verify(&self, data: &Data<Self::DataType>) -> Result<(), Self::Error> {
     insert_received_activity(&self.id, data).await?;
     self.object.verify(data).await?;
@@ -49,6 +50,7 @@ impl ActivityHandler for UndoDelete {
   }
 
   #[tracing::instrument(skip_all)]
+  #[cfg_attr(feature = "prometheus-metrics", autometrics::autometrics(objective = super::APUB_SLO))]
   async fn receive(self, context: &Data<LemmyContext>) -> Result<(), LemmyError> {
     if self.object.summary.is_some() {
       UndoDelete::receive_undo_remove_action(
@@ -63,6 +65,7 @@ impl ActivityHandler for UndoDelete {
   }
 }
 
+#[cfg_attr(feature = "prometheus-metrics", autometrics::autometrics(objective = super::APUB_SLO))]
 impl UndoDelete {
   #[tracing::instrument(skip_all)]
   pub(in crate::activities::deletion) fn new(

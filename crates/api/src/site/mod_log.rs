@@ -31,6 +31,7 @@ use lemmy_db_views_moderator::structs::{
 use lemmy_utils::error::LemmyError;
 use ModlogActionType::*;
 
+#[cfg_attr(feature = "prometheus-metrics", autometrics::autometrics(objective = super::API_SLO))]
 #[tracing::instrument(skip(context))]
 pub async fn get_mod_log(
   data: Query<GetModlog>,

@@ -5,6 +5,15 @@ pub mod create;
 pub mod read;
 pub mod update;
 
+#[cfg(feature = "prometheus-metrics")]
+const CRUD_SLO: autometrics::objectives::Objective =
+  autometrics::objectives::Objective::new("site_crud")
+    .success_rate(autometrics::objectives::ObjectivePercentile::P99_9)
+    .latency(
+      autometrics::objectives::ObjectiveLatency::Ms250,
+      autometrics::objectives::ObjectivePercentile::P99,
+    );
+
 /// Checks whether the default post listing type is valid for a site.
 pub fn site_default_post_listing_type_check(
   default_post_listing_type: &Option<ListingType>,

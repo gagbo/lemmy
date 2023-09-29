@@ -19,6 +19,7 @@ use lemmy_utils::{
   error::{LemmyError, LemmyErrorExt, LemmyErrorType},
   utils::{time::naive_from_unix, validation::is_valid_body_field},
 };
+#[cfg_attr(feature = "prometheus-metrics", autometrics::autometrics(objective = super::API_SLO))]
 #[tracing::instrument(skip(context))]
 pub async fn ban_from_site(
   data: Json<BanPerson>,

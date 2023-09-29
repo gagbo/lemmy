@@ -15,6 +15,7 @@ use lemmy_utils::error::{LemmyError, LemmyErrorType};
 
 /// Generate a new secret for two-factor-authentication. Afterwards you need to call [toggle_totp]
 /// to enable it. This can only be called if 2FA is currently disabled.
+#[cfg_attr(feature = "prometheus-metrics", autometrics::autometrics(objective = super::API_SLO))]
 #[tracing::instrument(skip(context))]
 pub async fn generate_totp_secret(
   local_user_view: LocalUserView,

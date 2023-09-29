@@ -23,6 +23,7 @@ use lemmy_db_schema::{
 use lemmy_utils::error::LemmyError;
 use url::Url;
 
+#[cfg_attr(feature = "prometheus-metrics", autometrics::autometrics(objective = super::APUB_SLO))]
 impl UndoFollow {
   #[tracing::instrument(skip_all)]
   pub async fn send(
@@ -51,6 +52,7 @@ impl UndoFollow {
 }
 
 #[async_trait::async_trait]
+#[cfg_attr(feature = "prometheus-metrics", autometrics::autometrics(objective = super::APUB_SLO))]
 impl ActivityHandler for UndoFollow {
   type DataType = LemmyContext;
   type Error = LemmyError;

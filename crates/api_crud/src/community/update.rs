@@ -24,6 +24,7 @@ use lemmy_utils::{
   utils::{slurs::check_slurs_opt, validation::is_valid_body_field},
 };
 
+#[cfg_attr(feature = "prometheus-metrics", autometrics::autometrics(objective = super::CRUD_SLO))]
 #[tracing::instrument(skip(context))]
 pub async fn update_community(
   data: Json<EditCommunity>,

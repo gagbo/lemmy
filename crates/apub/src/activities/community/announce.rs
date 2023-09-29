@@ -28,6 +28,7 @@ use serde_json::Value;
 use url::Url;
 
 #[async_trait::async_trait]
+#[cfg_attr(feature = "prometheus-metrics", autometrics::autometrics(objective = super::APUB_SLO))]
 impl ActivityHandler for RawAnnouncableActivities {
   type DataType = LemmyContext;
   type Error = LemmyError;

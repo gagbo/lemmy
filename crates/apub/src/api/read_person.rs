@@ -14,6 +14,7 @@ use lemmy_db_views::{comment_view::CommentQuery, post_view::PostQuery, structs::
 use lemmy_db_views_actor::structs::{CommunityModeratorView, PersonView};
 use lemmy_utils::error::{LemmyError, LemmyErrorExt2, LemmyErrorType};
 
+#[cfg_attr(feature = "prometheus-metrics", autometrics::autometrics(objective = super::APUB_SLO))]
 #[tracing::instrument(skip(context))]
 pub async fn read_person(
   data: Query<GetPersonDetails>,

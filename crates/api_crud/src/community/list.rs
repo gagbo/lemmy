@@ -9,6 +9,7 @@ use lemmy_db_views::structs::LocalUserView;
 use lemmy_db_views_actor::community_view::CommunityQuery;
 use lemmy_utils::error::LemmyError;
 
+#[cfg_attr(feature = "prometheus-metrics", autometrics::autometrics(objective = super::CRUD_SLO))]
 #[tracing::instrument(skip(context))]
 pub async fn list_communities(
   data: Query<ListCommunities>,

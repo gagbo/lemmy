@@ -75,6 +75,7 @@ impl From<Post> for ApubPost {
 }
 
 #[async_trait::async_trait]
+#[cfg_attr(feature = "prometheus-metrics", autometrics::autometrics(objective = super::APUB_SLO))]
 impl Object for ApubPost {
   type DataType = LemmyContext;
   type Kind = Page;

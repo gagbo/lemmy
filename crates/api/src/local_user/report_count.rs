@@ -12,6 +12,7 @@ use lemmy_db_views::structs::{
 use lemmy_utils::error::LemmyError;
 
 #[tracing::instrument(skip(context))]
+#[cfg_attr(feature = "prometheus-metrics", autometrics::autometrics(objective = super::API_SLO))]
 pub async fn report_count(
   data: Json<GetReportCount>,
   context: Data<LemmyContext>,

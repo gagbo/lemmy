@@ -12,6 +12,7 @@ use lemmy_db_views::{
 use lemmy_utils::error::LemmyError;
 
 /// Lists registration applications, filterable by undenied only.
+#[cfg_attr(feature = "prometheus-metrics", autometrics::autometrics(objective = super::API_SLO))]
 pub async fn list_registration_applications(
   data: Query<ListRegistrationApplications>,
   context: Data<LemmyContext>,

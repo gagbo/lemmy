@@ -18,6 +18,7 @@ use lemmy_db_schema::{
 use lemmy_db_views::structs::{CommentView, LocalUserView};
 use lemmy_utils::error::{LemmyError, LemmyErrorExt, LemmyErrorType};
 
+#[cfg_attr(feature = "prometheus-metrics", autometrics::autometrics(objective = super::CRUD_SLO))]
 #[tracing::instrument(skip(context))]
 pub async fn remove_comment(
   data: Json<RemoveComment>,

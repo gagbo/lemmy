@@ -39,6 +39,7 @@ use lemmy_utils::{
 };
 use url::Url;
 
+#[cfg_attr(feature = "prometheus-metrics", autometrics::autometrics(objective = super::CRUD_SLO))]
 #[tracing::instrument(skip(context))]
 pub async fn create_site(
   data: Json<CreateSite>,

@@ -9,6 +9,7 @@ use lemmy_db_views::structs::LocalUserView;
 use lemmy_utils::error::{LemmyError, LemmyErrorExt, LemmyErrorType};
 
 #[tracing::instrument(skip(context))]
+#[cfg_attr(feature = "prometheus-metrics", autometrics::autometrics(objective = super::API_SLO))]
 pub async fn reset_password(
   data: Json<PasswordReset>,
   context: Data<LemmyContext>,

@@ -6,6 +6,7 @@ use lemmy_api_common::{
 use lemmy_db_views::{private_message_view::PrivateMessageQuery, structs::LocalUserView};
 use lemmy_utils::error::LemmyError;
 
+#[cfg_attr(feature = "prometheus-metrics", autometrics::autometrics(objective = super::CRUD_SLO))]
 #[tracing::instrument(skip(context))]
 pub async fn get_private_message(
   data: Query<GetPrivateMessages>,

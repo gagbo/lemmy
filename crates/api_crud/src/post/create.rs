@@ -42,6 +42,7 @@ use tracing::Instrument;
 use url::Url;
 use webmention::{Webmention, WebmentionError};
 
+#[cfg_attr(feature = "prometheus-metrics", autometrics::autometrics(objective = super::CRUD_SLO))]
 #[tracing::instrument(skip(context))]
 pub async fn create_post(
   data: Json<CreatePost>,

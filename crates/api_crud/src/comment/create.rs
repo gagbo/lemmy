@@ -39,6 +39,7 @@ use lemmy_utils::{
 
 const MAX_COMMENT_DEPTH_LIMIT: usize = 100;
 
+#[cfg_attr(feature = "prometheus-metrics", autometrics::autometrics(objective = super::CRUD_SLO))]
 #[tracing::instrument(skip(context))]
 pub async fn create_comment(
   data: Json<CreateComment>,

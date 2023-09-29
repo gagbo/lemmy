@@ -17,6 +17,7 @@ use lemmy_db_schema::{
 use lemmy_utils::error::LemmyError;
 use url::Url;
 
+#[cfg_attr(feature = "prometheus-metrics", autometrics::autometrics(objective = super::APUB_SLO))]
 impl AcceptFollow {
   #[tracing::instrument(skip_all)]
   pub async fn send(follow: Follow, context: &Data<LemmyContext>) -> Result<(), LemmyError> {
@@ -52,6 +53,7 @@ impl ActivityHandler for AcceptFollow {
   }
 
   #[tracing::instrument(skip_all)]
+  #[cfg_attr(feature = "prometheus-metrics", autometrics::autometrics(objective = super::APUB_SLO))]
   async fn verify(&self, context: &Data<LemmyContext>) -> Result<(), LemmyError> {
     insert_received_activity(&self.id, context).await?;
     verify_urls_match(self.actor.inner(), self.object.object.inner())?;
@@ -63,6 +65,7 @@ impl ActivityHandler for AcceptFollow {
   }
 
   #[tracing::instrument(skip_all)]
+  #[cfg_attr(feature = "prometheus-metrics", autometrics::autometrics(objective = super::APUB_SLO))]
   async fn receive(self, context: &Data<LemmyContext>) -> Result<(), LemmyError> {
     let community = self.actor.dereference(context).await?;
     let person = self.object.actor.dereference(context).await?;

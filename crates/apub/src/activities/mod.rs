@@ -60,9 +60,19 @@ pub mod voting;
 /// so there is no harm in caching it for a longer time.
 pub static DEAD_INSTANCE_LIST_CACHE_DURATION: Duration = Duration::from_secs(30 * 60);
 
+#[cfg(feature = "prometheus-metrics")]
+const APUB_SLO: autometrics::objectives::Objective =
+  autometrics::objectives::Objective::new("activities_apub")
+    .success_rate(autometrics::objectives::ObjectivePercentile::P99_9)
+    .latency(
+      autometrics::objectives::ObjectiveLatency::Ms250,
+      autometrics::objectives::ObjectivePercentile::P99,
+    );
+
 /// Checks that the specified Url actually identifies a Person (by fetching it), and that the person
 /// doesn't have a site ban.
 #[tracing::instrument(skip_all)]
+#[cfg_attr(feature = "prometheus-metrics", autometrics::autometrics(objective = APUB_SLO))]
 async fn verify_person(
   person_id: &ObjectId<ApubPerson>,
   context: &Data<LemmyContext>,
@@ -78,6 +88,7 @@ async fn verify_person(
 
 /// Fetches the person and community to verify their type, then checks if person is banned from site
 /// or community.
+#[cfg_attr(feature = "prometheus-metrics", autometrics::autometrics(objective = APUB_SLO))]
 #[tracing::instrument(skip_all)]
 pub(crate) async fn verify_person_in_community(
   person_id: &ObjectId<ApubPerson>,
@@ -107,6 +118,7 @@ pub(crate) async fn verify_person_in_community(
 /// * `mod_id` - Activitypub ID of the mod or admin who performed the action
 /// * `object_id` - Activitypub ID of the actor or object that is being moderated
 /// * `community` - The community inside which moderation is happening
+#[cfg_attr(feature = "prometheus-metrics", autometrics::autometrics(objective = APUB_SLO))]
 #[tracing::instrument(skip_all)]
 pub(crate) async fn verify_mod_action(
   mod_id: &ObjectId<ApubPerson>,
@@ -196,6 +208,7 @@ pub(crate) trait GetActorType {
   fn actor_type(&self) -> ActorType;
 }
 
+#[cfg_attr(feature = "prometheus-metrics", autometrics::autometrics(objective = APUB_SLO))]
 #[tracing::instrument(skip_all)]
 async fn send_lemmy_activity<Activity, ActorT>(
   data: &Data<LemmyContext>,
@@ -231,6 +244,7 @@ where
   Ok(())
 }
 
+#[cfg_attr(feature = "prometheus-metrics", autometrics::autometrics(objective = APUB_SLO))]
 pub async fn handle_outgoing_activities(context: Data<LemmyContext>) -> LemmyResult<()> {
   while let Some(data) = ActivityChannel::retrieve_activity().await {
     match_outgoing_activities(data, &context.reset_request_count()).await?
@@ -238,6 +252,7 @@ pub async fn handle_outgoing_activities(context: Data<LemmyContext>) -> LemmyRes
   Ok(())
 }
 
+#[cfg_attr(feature = "prometheus-metrics", autometrics::autometrics(objective = APUB_SLO))]
 pub async fn match_outgoing_activities(
   data: SendActivityData,
   context: &Data<LemmyContext>,

@@ -8,6 +8,15 @@ pub mod read_person;
 pub mod resolve_object;
 pub mod search;
 
+#[cfg(feature = "prometheus-metrics")]
+const APUB_SLO: autometrics::objectives::Objective =
+  autometrics::objectives::Objective::new("api_apub")
+    .success_rate(autometrics::objectives::ObjectivePercentile::P99_9)
+    .latency(
+      autometrics::objectives::ObjectiveLatency::Ms250,
+      autometrics::objectives::ObjectivePercentile::P99,
+    );
+
 /// Returns default listing type, depending if the query is for frontpage or community.
 fn listing_type_with_default(
   type_: Option<ListingType>,

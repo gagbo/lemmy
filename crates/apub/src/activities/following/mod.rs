@@ -11,6 +11,15 @@ pub mod accept;
 pub mod follow;
 pub mod undo_follow;
 
+#[cfg(feature = "prometheus-metrics")]
+const APUB_SLO: autometrics::objectives::Objective =
+  autometrics::objectives::Objective::new("activities_following_apub")
+    .success_rate(autometrics::objectives::ObjectivePercentile::P99_9)
+    .latency(
+      autometrics::objectives::ObjectiveLatency::Ms250,
+      autometrics::objectives::ObjectivePercentile::P99,
+    );
+
 pub async fn send_follow_community(
   community: Community,
   person: Person,

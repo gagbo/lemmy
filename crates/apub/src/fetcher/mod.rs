@@ -15,6 +15,15 @@ pub mod search;
 pub mod site_or_community_or_user;
 pub mod user_or_community;
 
+#[cfg(feature = "prometheus-metrics")]
+const APUB_SLO: autometrics::objectives::Objective =
+  autometrics::objectives::Objective::new("fetcher_apub")
+    .success_rate(autometrics::objectives::ObjectivePercentile::P99_9)
+    .latency(
+      autometrics::objectives::ObjectiveLatency::Ms250,
+      autometrics::objectives::ObjectivePercentile::P99,
+    );
+
 /// Resolve actor identifier like `!news@example.com` to user or community object.
 ///
 /// In case the requesting user is logged in and the object was not found locally, it is attempted

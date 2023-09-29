@@ -36,6 +36,7 @@ use lemmy_db_schema::{
 use lemmy_utils::error::{LemmyError, LemmyErrorType};
 use url::Url;
 
+#[cfg_attr(feature = "prometheus-metrics", autometrics::autometrics(objective = super::APUB_SLO))]
 impl CreateOrUpdatePage {
   pub(crate) async fn new(
     post: ApubPost,
@@ -91,6 +92,7 @@ impl CreateOrUpdatePage {
 }
 
 #[async_trait::async_trait]
+#[cfg_attr(feature = "prometheus-metrics", autometrics::autometrics(objective = super::APUB_SLO))]
 impl ActivityHandler for CreateOrUpdatePage {
   type DataType = LemmyContext;
   type Error = LemmyError;

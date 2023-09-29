@@ -17,6 +17,7 @@ use url::Url;
 /// ObjectId directly, or a webfinger identifier (@user@example.com or !community@example.com)
 /// which gets resolved to an URL.
 #[tracing::instrument(skip_all)]
+#[cfg_attr(feature = "prometheus-metrics", autometrics::autometrics(objective = super::APUB_SLO))]
 pub(crate) async fn search_query_to_object_id(
   query: &str,
   context: &Data<LemmyContext>,
@@ -48,6 +49,7 @@ pub(crate) async fn search_query_to_object_id(
 /// as the ObjectId directly.  If the query is a webfinger identifier (@user@example.com or
 /// !community@example.com) this method will return an error.
 #[tracing::instrument(skip_all)]
+#[cfg_attr(feature = "prometheus-metrics", autometrics::autometrics(objective = super::APUB_SLO))]
 pub(crate) async fn search_query_to_object_id_local(
   query: &str,
   context: &Data<LemmyContext>,
@@ -75,6 +77,7 @@ pub(crate) enum SearchableKinds {
 }
 
 #[async_trait::async_trait]
+#[cfg_attr(feature = "prometheus-metrics", autometrics::autometrics(objective = super::APUB_SLO))]
 impl Object for SearchableObjects {
   type DataType = LemmyContext;
   type Kind = SearchableKinds;

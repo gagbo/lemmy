@@ -18,6 +18,7 @@ use lemmy_db_views::structs::{CommentReportView, CommentView, LocalUserView};
 use lemmy_utils::error::{LemmyError, LemmyErrorExt, LemmyErrorType};
 
 /// Creates a comment report and notifies the moderators of the community
+#[cfg_attr(feature = "prometheus-metrics", autometrics::autometrics(objective = super::API_SLO))]
 #[tracing::instrument(skip(context))]
 pub async fn create_comment_report(
   data: Json<CreateCommentReport>,

@@ -28,6 +28,7 @@ pub(crate) struct CommunityQuery {
 
 /// Return the ActivityPub json representation of a local community over HTTP.
 #[tracing::instrument(skip_all)]
+#[cfg_attr(feature = "prometheus-metrics", autometrics::autometrics(objective = super::APUB_SLO))]
 pub(crate) async fn get_apub_community_http(
   info: web::Path<CommunityQuery>,
   context: Data<LemmyContext>,
@@ -48,6 +49,7 @@ pub(crate) async fn get_apub_community_http(
 
 /// Handler for all incoming receive to community inboxes.
 #[tracing::instrument(skip_all)]
+#[cfg_attr(feature = "prometheus-metrics", autometrics::autometrics(objective = super::APUB_SLO))]
 pub async fn community_inbox(
   request: HttpRequest,
   body: Bytes,
@@ -60,6 +62,7 @@ pub async fn community_inbox(
 }
 
 /// Returns an empty followers collection, only populating the size (for privacy).
+#[cfg_attr(feature = "prometheus-metrics", autometrics::autometrics(objective = super::APUB_SLO))]
 pub(crate) async fn get_apub_community_followers(
   info: web::Path<CommunityQuery>,
   context: Data<LemmyContext>,
@@ -72,6 +75,7 @@ pub(crate) async fn get_apub_community_followers(
 
 /// Returns the community outbox, which is populated by a maximum of 20 posts (but no other
 /// activites like votes or comments).
+#[cfg_attr(feature = "prometheus-metrics", autometrics::autometrics(objective = super::APUB_SLO))]
 pub(crate) async fn get_apub_community_outbox(
   info: web::Path<CommunityQuery>,
   context: Data<LemmyContext>,
@@ -88,6 +92,7 @@ pub(crate) async fn get_apub_community_outbox(
 }
 
 #[tracing::instrument(skip_all)]
+#[cfg_attr(feature = "prometheus-metrics", autometrics::autometrics(objective = super::APUB_SLO))]
 pub(crate) async fn get_apub_community_moderators(
   info: web::Path<CommunityQuery>,
   context: Data<LemmyContext>,
@@ -104,6 +109,7 @@ pub(crate) async fn get_apub_community_moderators(
 }
 
 /// Returns collection of featured (stickied) posts.
+#[cfg_attr(feature = "prometheus-metrics", autometrics::autometrics(objective = super::APUB_SLO))]
 pub(crate) async fn get_apub_community_featured(
   info: web::Path<CommunityQuery>,
   context: Data<LemmyContext>,

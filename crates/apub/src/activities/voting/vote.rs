@@ -23,6 +23,7 @@ use lemmy_db_schema::source::local_site::LocalSite;
 use lemmy_utils::error::LemmyError;
 use url::Url;
 
+#[cfg_attr(feature = "prometheus-metrics", autometrics::autometrics(objective = super::APUB_SLO))]
 impl Vote {
   pub(in crate::activities::voting) fn new(
     object_id: ObjectId<PostOrComment>,
@@ -42,6 +43,7 @@ impl Vote {
 }
 
 #[async_trait::async_trait]
+#[cfg_attr(feature = "prometheus-metrics", autometrics::autometrics(objective = super::APUB_SLO))]
 impl ActivityHandler for Vote {
   type DataType = LemmyContext;
   type Error = LemmyError;

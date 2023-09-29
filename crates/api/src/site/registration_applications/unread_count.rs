@@ -8,6 +8,7 @@ use lemmy_db_schema::source::local_site::LocalSite;
 use lemmy_db_views::structs::{LocalUserView, RegistrationApplicationView};
 use lemmy_utils::error::LemmyError;
 
+#[cfg_attr(feature = "prometheus-metrics", autometrics::autometrics(objective = super::API_SLO))]
 pub async fn get_unread_registration_application_count(
   context: Data<LemmyContext>,
   local_user_view: LocalUserView,

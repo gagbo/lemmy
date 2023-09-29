@@ -28,6 +28,7 @@ use lemmy_db_schema::{
 use lemmy_utils::error::LemmyError;
 use url::Url;
 
+#[cfg_attr(feature = "prometheus-metrics", autometrics::autometrics(objective = super::APUB_SLO))]
 impl Follow {
   pub(in crate::activities::following) fn new(
     actor: &ApubPerson,
@@ -72,6 +73,7 @@ impl Follow {
 }
 
 #[async_trait::async_trait]
+#[cfg_attr(feature = "prometheus-metrics", autometrics::autometrics(objective = super::APUB_SLO))]
 impl ActivityHandler for Follow {
   type DataType = LemmyContext;
   type Error = LemmyError;

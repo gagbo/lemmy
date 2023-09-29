@@ -26,6 +26,15 @@ use lemmy_utils::error::LemmyError;
 pub mod undo_vote;
 pub mod vote;
 
+#[cfg(feature = "prometheus-metrics")]
+const APUB_SLO: autometrics::objectives::Objective =
+  autometrics::objectives::Objective::new("activities_voting_apub")
+    .success_rate(autometrics::objectives::ObjectivePercentile::P99_9)
+    .latency(
+      autometrics::objectives::ObjectiveLatency::Ms250,
+      autometrics::objectives::ObjectivePercentile::P99,
+    );
+
 pub(crate) async fn send_like_activity(
   object_id: DbUrl,
   actor: Person,

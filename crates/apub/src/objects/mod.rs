@@ -12,6 +12,15 @@ pub mod person;
 pub mod post;
 pub mod private_message;
 
+#[cfg(feature = "prometheus-metrics")]
+const APUB_SLO: autometrics::objectives::Objective =
+  autometrics::objectives::Objective::new("objects_apub")
+    .success_rate(autometrics::objectives::ObjectivePercentile::P99_9)
+    .latency(
+      autometrics::objectives::ObjectiveLatency::Ms250,
+      autometrics::objectives::ObjectivePercentile::P99,
+    );
+
 pub(crate) fn read_from_string_or_source(
   content: &str,
   media_type: &Option<MediaTypeMarkdownOrHtml>,

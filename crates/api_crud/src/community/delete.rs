@@ -15,6 +15,7 @@ use lemmy_db_views::structs::LocalUserView;
 use lemmy_db_views_actor::structs::CommunityModeratorView;
 use lemmy_utils::error::{LemmyError, LemmyErrorExt, LemmyErrorType};
 
+#[cfg_attr(feature = "prometheus-metrics", autometrics::autometrics(objective = super::CRUD_SLO))]
 #[tracing::instrument(skip(context))]
 pub async fn delete_community(
   data: Json<DeleteCommunity>,

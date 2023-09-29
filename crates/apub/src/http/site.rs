@@ -16,6 +16,7 @@ use lemmy_db_views::structs::SiteView;
 use lemmy_utils::error::LemmyError;
 use url::Url;
 
+#[cfg_attr(feature = "prometheus-metrics", autometrics::autometrics(objective = super::APUB_SLO))]
 pub(crate) async fn get_apub_site_http(
   context: Data<LemmyContext>,
 ) -> Result<HttpResponse, LemmyError> {
@@ -25,6 +26,7 @@ pub(crate) async fn get_apub_site_http(
   create_apub_response(&apub)
 }
 
+#[cfg_attr(feature = "prometheus-metrics", autometrics::autometrics(objective = super::APUB_SLO))]
 #[tracing::instrument(skip_all)]
 pub(crate) async fn get_apub_site_outbox(
   context: Data<LemmyContext>,
@@ -37,6 +39,7 @@ pub(crate) async fn get_apub_site_outbox(
   create_apub_response(&outbox)
 }
 
+#[cfg_attr(feature = "prometheus-metrics", autometrics::autometrics(objective = super::APUB_SLO))]
 #[tracing::instrument(skip_all)]
 pub async fn get_apub_site_inbox(
   request: HttpRequest,

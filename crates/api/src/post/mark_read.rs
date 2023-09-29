@@ -7,6 +7,7 @@ use lemmy_api_common::{
 use lemmy_db_views::structs::{LocalUserView, PostView};
 use lemmy_utils::error::LemmyError;
 
+#[cfg_attr(feature = "prometheus-metrics", autometrics::autometrics(objective = super::API_SLO))]
 #[tracing::instrument(skip(context))]
 pub async fn mark_post_as_read(
   data: Json<MarkPostAsRead>,

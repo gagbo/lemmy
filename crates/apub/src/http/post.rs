@@ -15,6 +15,7 @@ pub(crate) struct PostQuery {
 }
 
 /// Return the ActivityPub json representation of a local post over HTTP.
+#[cfg_attr(feature = "prometheus-metrics", autometrics::autometrics(objective = super::APUB_SLO))]
 #[tracing::instrument(skip_all)]
 pub(crate) async fn get_apub_post(
   info: web::Path<PostQuery>,

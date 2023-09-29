@@ -29,6 +29,15 @@ use url::Url;
 pub mod block_user;
 pub mod undo_block_user;
 
+#[cfg(feature = "prometheus-metrics")]
+const APUB_SLO: autometrics::objectives::Objective =
+  autometrics::objectives::Objective::new("activities_block_apub")
+    .success_rate(autometrics::objectives::ObjectivePercentile::P99_9)
+    .latency(
+      autometrics::objectives::ObjectiveLatency::Ms250,
+      autometrics::objectives::ObjectivePercentile::P99,
+    );
+
 #[derive(Clone, Debug)]
 pub enum SiteOrCommunity {
   Site(ApubSite),

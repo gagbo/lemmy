@@ -8,6 +8,9 @@ homepage.workspace = true
 documentation.workspace = true
 repository.workspace = true
 
+[features]
+prometheus-metrics = [ "autometrics" ]
+
 [dependencies]
 lemmy_utils = { workspace = true }
 lemmy_db_schema = { workspace = true, features = ["full"] }
@@ -24,3 +27,4 @@ async-trait = { workspace = true }
 webmention = "0.5.0"
 chrono = { workspace = true }
 uuid = { workspace = true }
+autometrics = { workspace = true, optional = true }

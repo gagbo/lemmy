@@ -17,6 +17,7 @@ use lemmy_utils::{
   version,
 };
 
+#[cfg_attr(feature = "prometheus-metrics", autometrics::autometrics(objective = super::API_SLO))]
 #[tracing::instrument(skip(context))]
 pub async fn leave_admin(
   context: Data<LemmyContext>,

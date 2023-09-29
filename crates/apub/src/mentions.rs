@@ -16,6 +16,15 @@ use serde::{Deserialize, Serialize};
 use serde_json::Value;
 use url::Url;
 
+#[cfg(feature = "prometheus-metrics")]
+const APUB_SLO: autometrics::objectives::Objective =
+  autometrics::objectives::Objective::new("mentions_apub")
+    .success_rate(autometrics::objectives::ObjectivePercentile::P99_9)
+    .latency(
+      autometrics::objectives::ObjectiveLatency::Ms250,
+      autometrics::objectives::ObjectivePercentile::P99,
+    );
+
 #[derive(Clone, Debug, Deserialize, Serialize)]
 #[serde(untagged)]
 pub enum MentionOrValue {
@@ -39,6 +48,7 @@ pub struct MentionsAndAddresses {
 /// This takes a comment, and builds a list of to_addresses, inboxes,
 /// and mention tags, so they know where to be sent to.
 /// Addresses are the persons / addresses that go in the cc field.
+#[cfg_attr(feature = "prometheus-metrics", autometrics::autometrics(objective = APUB_SLO))]
 #[tracing::instrument(skip(comment, community_id, context))]
 pub async fn collect_non_local_mentions(
   comment: &ApubComment,
@@ -90,6 +100,7 @@ pub async fn collect_non_local_mentions(
 
 /// Returns the apub ID of the person this comment is responding to. Meaning, in case this is a
 /// top-level comment, the creator of the post, otherwise the creator of the parent comment.
+#[cfg_attr(feature = "prometheus-metrics", autometrics::autometrics(objective = APUB_SLO))]
 #[tracing::instrument(skip(pool, comment))]
 async fn get_comment_parent_creator(
   pool: &mut DbPool<'_>,

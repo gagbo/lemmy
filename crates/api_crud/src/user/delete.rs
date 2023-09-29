@@ -11,6 +11,7 @@ use lemmy_db_schema::source::person::Person;
 use lemmy_db_views::structs::LocalUserView;
 use lemmy_utils::error::{LemmyError, LemmyErrorType};
 
+#[cfg_attr(feature = "prometheus-metrics", autometrics::autometrics(objective = super::CRUD_SLO))]
 #[tracing::instrument(skip(context))]
 pub async fn delete_account(
   data: Json<DeleteAccount>,

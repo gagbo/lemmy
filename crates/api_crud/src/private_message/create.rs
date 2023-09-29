@@ -27,6 +27,7 @@ use lemmy_utils::{
   utils::{slurs::remove_slurs, validation::is_valid_body_field},
 };
 
+#[cfg_attr(feature = "prometheus-metrics", autometrics::autometrics(objective = super::CRUD_SLO))]
 #[tracing::instrument(skip(context))]
 pub async fn create_private_message(
   data: Json<CreatePrivateMessage>,

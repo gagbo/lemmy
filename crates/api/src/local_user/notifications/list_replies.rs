@@ -7,6 +7,7 @@ use lemmy_db_views::structs::LocalUserView;
 use lemmy_db_views_actor::comment_reply_view::CommentReplyQuery;
 use lemmy_utils::error::LemmyError;
 
+#[cfg_attr(feature = "prometheus-metrics", autometrics::autometrics(objective = super::API_SLO))]
 #[tracing::instrument(skip(context))]
 pub async fn list_replies(
   data: Query<GetReplies>,

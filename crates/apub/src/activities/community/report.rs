@@ -25,6 +25,7 @@ use lemmy_db_schema::{
 use lemmy_utils::error::LemmyError;
 use url::Url;
 
+#[cfg_attr(feature = "prometheus-metrics", autometrics::autometrics(objective = super::APUB_SLO))]
 impl Report {
   #[tracing::instrument(skip_all)]
   pub(crate) async fn send(
@@ -60,6 +61,7 @@ impl Report {
 }
 
 #[async_trait::async_trait]
+#[cfg_attr(feature = "prometheus-metrics", autometrics::autometrics(objective = super::APUB_SLO))]
 impl ActivityHandler for Report {
   type DataType = LemmyContext;
   type Error = LemmyError;

@@ -28,6 +28,7 @@ pub enum SiteOrPersonOrGroup {
 }
 
 #[async_trait::async_trait]
+#[cfg_attr(feature = "prometheus-metrics", autometrics::autometrics(objective = super::APUB_SLO))]
 impl Object for SiteOrCommunityOrUser {
   type DataType = LemmyContext;
   type Kind = SiteOrPersonOrGroup;
@@ -80,6 +81,7 @@ impl Object for SiteOrCommunityOrUser {
   }
 }
 
+#[cfg_attr(feature = "prometheus-metrics", autometrics::autometrics(objective = super::APUB_SLO))]
 impl Actor for SiteOrCommunityOrUser {
   fn id(&self) -> Url {
     match self {

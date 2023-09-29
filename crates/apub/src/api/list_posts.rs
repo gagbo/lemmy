@@ -17,6 +17,7 @@ use lemmy_db_views::{
 };
 use lemmy_utils::error::{LemmyError, LemmyErrorExt, LemmyErrorType};
 
+#[cfg_attr(feature = "prometheus-metrics", autometrics::autometrics(objective = super::APUB_SLO))]
 #[tracing::instrument(skip(context))]
 pub async fn list_posts(
   data: Query<GetPosts>,

@@ -13,6 +13,7 @@ use lemmy_utils::{
 };
 
 #[tracing::instrument(skip(context))]
+#[cfg_attr(feature = "prometheus-metrics", autometrics::autometrics(objective = super::API_SLO))]
 pub async fn change_password(
   data: Json<ChangePassword>,
   context: Data<LemmyContext>,

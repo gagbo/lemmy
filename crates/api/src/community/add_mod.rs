@@ -17,6 +17,7 @@ use lemmy_db_views::structs::LocalUserView;
 use lemmy_db_views_actor::structs::CommunityModeratorView;
 use lemmy_utils::error::{LemmyError, LemmyErrorExt, LemmyErrorType};
 
+#[cfg_attr(feature = "prometheus-metrics", autometrics::autometrics(objective = super::API_SLO))]
 #[tracing::instrument(skip(context))]
 pub async fn add_mod_to_community(
   data: Json<AddModToCommunity>,

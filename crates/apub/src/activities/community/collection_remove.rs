@@ -34,6 +34,7 @@ use lemmy_db_schema::{
 use lemmy_utils::error::LemmyError;
 use url::Url;
 
+#[cfg_attr(feature = "prometheus-metrics", autometrics::autometrics(objective = super::APUB_SLO))]
 impl CollectionRemove {
   #[tracing::instrument(skip_all)]
   pub async fn send_remove_mod(
@@ -96,6 +97,7 @@ impl CollectionRemove {
 }
 
 #[async_trait::async_trait]
+#[cfg_attr(feature = "prometheus-metrics", autometrics::autometrics(objective = super::APUB_SLO))]
 impl ActivityHandler for CollectionRemove {
   type DataType = LemmyContext;
   type Error = LemmyError;

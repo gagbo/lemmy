@@ -9,6 +9,7 @@ use lemmy_db_views::structs::{LocalUserView, PostReportView};
 use lemmy_utils::error::{LemmyError, LemmyErrorExt, LemmyErrorType};
 
 /// Resolves or unresolves a post report and notifies the moderators of the community
+#[cfg_attr(feature = "prometheus-metrics", autometrics::autometrics(objective = super::API_SLO))]
 #[tracing::instrument(skip(context))]
 pub async fn resolve_post_report(
   data: Json<ResolvePostReport>,

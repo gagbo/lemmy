@@ -30,6 +30,7 @@ pub enum PageOrNote {
 }
 
 #[async_trait::async_trait]
+#[cfg_attr(feature = "prometheus-metrics", autometrics::autometrics(objective = super::APUB_SLO))]
 impl Object for PostOrComment {
   type DataType = LemmyContext;
   type Kind = PageOrNote;
@@ -87,6 +88,7 @@ impl Object for PostOrComment {
 }
 
 #[async_trait::async_trait]
+#[cfg_attr(feature = "prometheus-metrics", autometrics::autometrics(objective = super::APUB_SLO))]
 impl InCommunity for PostOrComment {
   async fn community(&self, context: &Data<LemmyContext>) -> Result<ApubCommunity, LemmyError> {
     let cid = match self {

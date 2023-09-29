@@ -11,6 +11,7 @@ use lemmy_db_schema::{
 use lemmy_db_views::structs::LocalUserView;
 use lemmy_utils::error::{LemmyError, LemmyErrorExt, LemmyErrorType};
 
+#[cfg_attr(feature = "prometheus-metrics", autometrics::autometrics(objective = super::API_SLO))]
 #[tracing::instrument(skip(context))]
 pub async fn block_instance(
   data: Json<BlockInstance>,

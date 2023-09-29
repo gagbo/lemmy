@@ -17,6 +17,7 @@ use lemmy_db_schema::{
 use lemmy_db_views::{comment_view::CommentQuery, structs::LocalUserView};
 use lemmy_utils::error::{LemmyError, LemmyErrorExt, LemmyErrorType};
 
+#[cfg_attr(feature = "prometheus-metrics", autometrics::autometrics(objective = super::APUB_SLO))]
 #[tracing::instrument(skip(context))]
 pub async fn list_comments(
   data: Query<GetComments>,
